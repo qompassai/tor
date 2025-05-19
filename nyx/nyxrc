@@ -1,0 +1,12 @@
+# ~/.GH/Qompass/Tor/nyx/nyxrc
+# ---------------------------
+# Copyright (C) 2025 Qompass AI, All rights reserved
+data_directory ~/.nyx
+color_interface true
+confirm_quit true
+graph_stat resources
+graph_interval each second
+show_accounting true
+show_bits true
+show_graph true
+show_torrc true

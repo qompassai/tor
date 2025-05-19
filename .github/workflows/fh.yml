@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         system: [x86_64-linux, aarch64-linux, aarch64-darwin]
-          runs-on: [self-hosted, linux, x64, ${{ matrix.system }}]
+          runs-on: [self-hosted, linux, x64]
     permissions:
       id-token: write
       contents: read

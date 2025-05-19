@@ -1,0 +1,39 @@
+# ~/.GH/Qompass/Tor/torrc/example.torrc
+# -------------------------------------
+# Copyright (C) 2025 Qompass AI, All rights reserved
+
+AutomapHostsOnResolve 1
+ControlPort 9031
+CookieAuthentication 1
+CookieAuthFile /home/example/.config/tor/data/control_auth_cookie
+CookieAuthFileGroupReadable 1
+DataDirectory /home/example/.config/tor/data
+DNSPort 127.0.0.1:9017
+HashedControlPassword 16:JUBR208QWZYF9R4NYOZ7P3HYKD1QX2KX85ANX5AY
+SocksPort 9002
+
+# Hidden Service 1 - NGINX (main)
+HiddenServiceDir /home/example/.config/tor/signals/zgqye6
+HiddenServiceVersion 3
+HiddenServicePort 80 127.0.0.1:8233
+
+# Hidden Service 2 - SSH (for onion SSH access)
+HiddenServiceDir /home/example/.config/tor/signals/p29t5j
+HiddenServiceVersion 3
+HiddenServicePort 2040 127.0.0.1:22
+
+# Hidden Service 3 - WKD (GPG key discovery)
+HiddenServiceDir /home/example/.config/tor/signals/02aimx
+HiddenServiceVersion 3
+HiddenServicePort 80 127.0.0.1:8183
+
+# Hidden Service 4 - Git / Forgejo
+HiddenServiceDir /home/example/.config/tor/signals/9dqnf5
+HiddenServiceVersion 3
+HiddenServicePort 80 127.0.0.1:3956
+
+HiddenServiceDir /home/example/.config/tor/signals/pyu3xo
+HiddenServiceVersion 3
+HiddenServicePort 587 127.0.0.1:1585
+HiddenServicePort 143 127.0.0.1:1183
+

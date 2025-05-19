@@ -2,22 +2,20 @@ name: Publish to FlakeHub
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
   flakehub-publish:
-    strategy:
-      matrix:
-        system: [x86_64-linux, aarch64-linux, aarch64-darwin]
-          runs-on: [self-hosted, linux, x64]
+    runs-on: [self-hosted, linux, x64]
     permissions:
       id-token: write
       contents: read
     steps:
       - uses: actions/checkout@v4
-      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/determinate-nix-action@v3
       - uses: DeterminateSystems/flakehub-push@main
         with:
-          name: qompassai/tor
+          name: DeterminateSystems/flakehub-push
           rolling: true
           visibility: public

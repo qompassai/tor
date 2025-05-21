@@ -7,6 +7,7 @@
 <h3> Qompass AI on Tor </h3>
 
 ![Repository Views](https://komarev.com/ghpvc/?username=qompassai-tor)
+![GitHub all releases](https://img.shields.io/github/downloads/qompassai/tor/total?style=flat-square)
   <a href="https://www.torproject.org/">
   <img src="https://img.shields.io/badge/Tor-7E4798?style=for-the-badge&logo=torproject&logoColor=white" alt="Tor">
 </a>

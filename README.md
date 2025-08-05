@@ -1,6 +1,7 @@
-<!-- /qompassai/tor/README.md -->
-<!-- ---------------------------- -->
+<!---------------- /qompassai/tor/README.md -------------->
+<!---------------------Qompass AI Tor -------------------->
 <!-- Copyright (C) 2025 Qompass AI, All rights reserved -->
+<!-- ----------------------------------------------------->
 
 <h2> The Onion Router (aka "Tor") </h2>
 

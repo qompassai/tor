@@ -7,65 +7,25 @@
 
 <h3> For Navigating the "Deep" Web </h3>
 
-.onion-badge {
-  background: linear-gradient(90deg, #4f2c91, #22223b);
-  color: #fff;
-  padding: 0.35em 1em;
-  border-radius: 999px;
-  font-family: "Fira Mono", monospace;
-  font-weight: bold;
-  box-shadow: 0 2px 8px rgba(80, 22, 168, 0.15);
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5em;
-  letter-spacing: 0.05em;
-  margin-bottom: 0.4em;
-}
-.clearnet-badge {
-  background: linear-gradient(90deg, #22c55e, #38bdf8);
-  color: #fff;
-  padding: 0.35em 1em;
-  border-radius: 999px;
-  font-family: "Fira Mono", monospace;
-  font-weight: bold;
-  box-shadow: 0 2px 8px rgba(44, 201, 64, 0.13);
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5em;
-  letter-spacing: 0.05em;
-  margin-bottom: 0.4em;
-}
-.onion-icon {
-  font-size: 1em;
-}
-.label {
-  font-size: 0.85em;
-  opacity: 0.8;
-  margin-right: 0.5em;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
-}
-</style>
-
 <p>For questions, please reach out at</p>
 
 <div>
   <span class="onion-badge">
-    <span class="label">Onion</span>
+    <span class="label">Onion1</span>
     <span class="onion-icon">🧅</span>
     ph43dru5@torbox36ijlcevujx7mjb4oiusvwgvmue7jfn2cvutwa6kl6to3uyqad.onion
   </span>
 </div>
 <div>
   <span class="onion-badge">
-    <span class="label">Onion</span>
+    <span class="label">Onion2</span>
     <span class="onion-icon">🧅</span>
     ph43dru5@torbox3uiot6wchz.onion
   </span>
 </div>
 <div>
   <span class="onion-badge">
-    <span class="label">Onion</span>
+    <span class="label">Onion3</span>
     <span class="onion-icon">🧅</span>
     ph43dru5@torbox.onion
   </span>
@@ -94,14 +54,75 @@
   </summary>
   <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 10px; font-family: monospace;">
 
-[Onionlinks](http://jaz45aabn5vkemy4jkg4mi4syheisqn2wn2n4fsuitpccdackjwxplad.onion/)
-[Defcon](http://g7ejphhubv5idbbu3hb3wawrs5adw7tkx7yjabnf65xtzztgg4hcsqqd.onion/)
-[CIA](http://ciadotgov4sjwlzihbbgxnqg3xiyrg7so2r2o3lt5wz5ypk4sxyjstad.onion/)
-[Whonix](http://www.dds6qkxpwdeubwucdiaord2xgbbeyds25rbsgr73tbfpqpt4a6vjwsyd.onion/)
-[Torbox](http://torbox36ijlcevujx7mjb4oiusvwgvmue7jfn2cvutwa6kl6to3uyqad.onion/welcome)
-  [Propublica](http://p53lf57qovyuvwsc6xnrppyply3vtqm7l6pcobkmyqsiofyeznfu5uqd.onion/)
-  [Dread](https://dreadytofatroptsdj6io7l3xptbet6onoyno2yv7jicoxknyazubrad.onion/)
-  [Opsec Bible Fork](http://gdatura24gtdy23lxd7ht3xzx6mi7mdlkabpvuefhrjn4t5jduviw5ad.onion/ph43dru5/opsec-blogposts)
+<div class="tor-table-container">
+  <table class="tor-table">
+    <thead>
+      <tr>
+        <th>Site</th>
+        <th>Type</th>
+        <th>Link</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Onionlinks</td>
+        <td><span class="tor-badge">.onion</span></td>
+        <td>
+          <a class="tor-link" href="http://jaz45aabn5vkemy4jkg4mi4syheisqn2wn2n4fsuitpccdackjwxplad.onion/">jaz4...plad.onion</a>
+        </td>
+      </tr>
+      <tr>
+        <td>Defcon</td>
+        <td><span class="tor-badge">.onion</span></td>
+        <td>
+          <a class="tor-link" href="http://g7ejphhubv5idbbu3hb3wawrs5adw7tkx7yjabnf65xtzztgg4hcsqqd.onion/">g7ej...cqqd.onion</a>
+        </td>
+      </tr>
+      <tr>
+        <td>CIA</td>
+        <td><span class="tor-badge">.onion</span></td>
+        <td>
+          <a class="tor-link" href="http://ciadotgov4sjwlzihbbgxnqg3xiyrg7so2r2o3lt5wz5ypk4sxyjstad.onion/">ciadotgov...stad.onion</a>
+        </td>
+      </tr>
+      <tr>
+        <td>Whonix</td>
+        <td><span class="tor-badge">.onion</span></td>
+        <td>
+          <a class="tor-link" href="http://www.dds6qkxpwdeubwucdiaord2xgbbeyds25rbsgr73tbfpqpt4a6vjwsyd.onion/">www.dds6...wsyd.onion</a>
+        </td>
+      </tr>
+      <tr>
+        <td>Torbox</td>
+        <td><span class="tor-badge">.onion</span></td>
+        <td>
+          <a class="tor-link" href="http://torbox36ijlcevujx7mjb4oiusvwgvmue7jfn2cvutwa6kl6to3uyqad.onion/welcome">torbox...qad.onion</a>
+        </td>
+      </tr>
+      <tr>
+        <td>Propublica</td>
+        <td><span class="tor-badge">.onion</span></td>
+        <td>
+          <a class="tor-link" href="http://p53lf57qovyuvwsc6xnrppyply3vtqm7l6pcobkmyqsiofyeznfu5uqd.onion/">p53l...uqd.onion</a>
+        </td>
+      </tr>
+      <tr>
+        <td>Dread</td>
+        <td><span class="tor-badge">.onion</span></td>
+        <td>
+          <a class="tor-link" href="https://dreadytofatroptsdj6io7l3xptbet6onoyno2yv7jicoxknyazubrad.onion/">dready...rad.onion</a>
+        </td>
+      </tr>
+      <tr>
+        <td>Opsec Bible Fork</td>
+        <td><span class="tor-badge">.onion</span></td>
+        <td>
+          <a class="tor-link" href="http://gdatura24gtdy23lxd7ht3xzx6mi7mdlkabpvuefhrjn4t5jduviw5ad.onion/ph43dru5/opsec-blogposts">gdatura...5ad.onion</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 </details>
 
@@ -121,8 +142,30 @@
   </summary>
   <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 10px; font-family: monospace;">
 
-[OnionWallet](http://zwf5i7hiwmffq2bl7euedg6y5ydzze3ljiyrjmm7o42vhe7ni56fm7qd.onion/)
-[OnionShare](http://lldan5gahapx5k7iafb3s4ikijc4ni7gx5iywdflkba5y2ezyg6sjgyd.onion/)
+<div class="tor-table-container">
+  <table class="tor-table">
+    <thead>
+      <tr>
+        <th>Service</th>
+        <th>Type</th>
+        <th>Link</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>OnionWallet</td>
+        <td><span class="tor-badge">.onion</span></td>
+        <td><a class="tor-link" href="http://zwf5i7hiwmffq2bl7euedg6y5ydzze3ljiyrjmm7o42vhe7ni56fm7qd.onion/">zwf...m7qd.onion</a></td>
+      </tr>
+      <tr>
+        <td>OnionShare</td>
+        <td><span class="tor-badge">.onion</span></td>
+        <td><a class="tor-link" href="http://lldan5gahapx5k7iafb3s4ikijc4ni7gx5iywdflkba5y2ezyg6sjgyd.onion/">lld...jyd.onion</a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
 
 </details>
 

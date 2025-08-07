@@ -34,7 +34,7 @@
   <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 10px; font-family: monospace;">
 
 ```sh  
-curl -fsSL https://raw.githubusercontent.com/qompassai/dotfiles/main/scripts/quickstart.sh | sh
+curl -fsSL https://raw.githubusercontent.com/qompassai/tor/main/scripts/quickstart.sh | sh
 ```
   </div>
   <blockquote style="font-size: 1.2em; line-height: 1.8; padding: 25px; background: #f8f9fa; border-left: 6px solid #667eea; border-radius: 8px; margin: 15px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
@@ -43,63 +43,171 @@ curl -fsSL https://raw.githubusercontent.com/qompassai/dotfiles/main/scripts/qui
         <strong>📄 We advise you read the script BEFORE running it 😉</strong>
       </summary>
       <pre style="background: #fff; padding: 15px; border-radius: 5px; border: 1px solid #ddd; overflow-x: auto;">
-#!/usr/bin/env bash
-# /qompassai/dotfiles/scripts/quickstart.sh
-# Qompass AI Quick Start Script
+#!/bin/sh
+# /qompassai/tor/scripts/quickstart.sh
+# Qompass AI · Tor Quick Start
 # Copyright (C) 2025 Qompass AI, All rights reserved
-####################################################
-REPO="https://github.com/qompassai/dotfiles"
-TARGET_DIR="$HOME/.dotfiles"
-if [ -d "$TARGET_DIR" ]; then
-    echo "Removing existing dotfiles directory..."
-    rm -rf "$TARGET_DIR"
-fi
-echo "Cloning Qompass AI Dotfiles..."
-git clone "$REPO" "$TARGET_DIR"
-echo "Setting up symlinks..."
-mkdir -p "$HOME/.config/nix" "$HOME/.profile.d"
-ln -sf "$TARGET_DIR/.config/nix/nix.conf" "$HOME/.config/nix/nix.conf"
-ln -sf "$TARGET_DIR/.profile.d/67-nix.sh" "$HOME/.profile.d/67-nix.sh"
-mkdir -p "$HOME/.config"
-ln -sfn "$TARGET_DIR/home" "$HOME/.config/home" 2>/dev/null || true
-ln -sfn "$TARGET_DIR/.local" "$HOME/.local" 2>/dev/null || true
-ln -sf "$TARGET_DIR/flake.nix" "$HOME/.config/flake.nix" 2>/dev/null || true
-source "$HOME/.profile.d/67-nix.sh" 2>/dev/null || {
-    echo "WARNING: Could not source Nix profile configuration. Falling back to manual exporting"
-    export NIX_CONF_DIR="$HOME/.config/nix"
-    export NIX_STORE_DIR="$HOME/.nix/store"
-    export NIX_STATE_DIR="$HOME/.local/state/nix"
-    export NIX_LOG_DIR="$HOME/.local/state/nix/log"
-    export NIX_PROFILE_DIR="$HOME/.nix-profile"
-    export PATH="$NIX_PROFILE_DIR/bin:$PATH"
+#########################################################
+set -eu
+PREFIX="$HOME/.local"
+BIN_DIR="$PREFIX/bin"
+LIB_DIR="$PREFIX/lib"
+SHARE_DIR="$PREFIX/share"
+SRC_DIR="$PREFIX/src/tor"
+OPT_DIR="$PREFIX/opt"
+XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+mkdir -p "$BIN_DIR" "$LIB_DIR" "$SHARE_DIR" "$SRC_DIR" "$OPT_DIR"
+TOR_VERSION="0.4.8.11"
+TORSOCKS_VERSION="2.4.0"
+TOR_BROWSER_DEFAULT="13.0.14"
+PY_CMD="${PYTHON:-python3}"
+clear
+printf '╭────────────────────────────────────────────╮\n'
+printf '│     Qompass AI · Tor Quick‑Start Menu      │\n'
+printf '╰────────────────────────────────────────────╯\n'
+printf '      © 2025 Qompass AI. All rights reserved  \n\n'
+echo "Which component would you like to install?"
+echo " 1) tor (daemon, CLI relay/client)"
+echo " 2) tor-browser (official privacy browser)"
+echo " 3) nyx (Tor status/monitor UI)"
+echo " 4) arti (Rust Tor client, next generation)"
+echo " 5) torsocks (library for torifying)"
+echo " a) All"
+echo " q) Quit"
+printf "Choose [a]: "
+read -r choice
+[ -z "$choice" ] && choice="a"
+[ "$choice" = "q" ] && exit 0
+COMPONENTS="tor tor-browser nyx arti torsocks"
+select_component() {
+        case "$1" in
+        1) echo "tor" ;;
+        2) echo "tor-browser" ;;
+        3) echo "nyx" ;;
+        4) echo "arti" ;;
+        5) echo "torsocks" ;;
+        a | A) echo "$COMPONENTS" ;;
+        *)
+                echo ""
+                echo "Invalid option." >&2
+                exit 1
+                ;;
+        esac
 }
-if ! command -v nix >/dev/null; then
-    echo "Installing Nix with custom configuration..."
-    mkdir -p /.nix/var/nix/{profiles,gcroots,db}
-    chown -R "$(whoami)" /.nix
-    sh <(curl -L https://nixos.org/nix/install) --daemon \
-        --nix-extra-conf-file "$NIX_CONF_DIR/nix.conf"
-    if [ -f '/.nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
-        . '/.nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
-    fi
-fi
-echo "Setting up Nix environment..."
-cd "$TARGET_DIR"
-nix flake update
-detect_shell() {
-    case "$(ps -p $$ -o comm=)" in
-        *bash*) echo "bash" ;;
-        *zsh*)  echo "zsh" ;;
-        *fish*) echo "fish" ;;
-        *)      echo "bash" ;;
-    esac
+TO_INSTALL=$(select_component "$choice")
+echo "You selected: $TO_INSTALL"
+echo
+install_tor() {
+        echo "→ Installing tor ($TOR_VERSION)..."
+        cd "$SRC_DIR"
+        if [ ! -d "tor-$TOR_VERSION" ]; then
+                curl -fsSL "https://dist.torproject.org/tor-$TOR_VERSION.tar.gz" | tar xz
+        fi
+        cd "tor-$TOR_VERSION"
+        if [ ! -f "$BIN_DIR/tor" ]; then
+                ./configure --prefix="$PREFIX" --with-libevent-dir="$PREFIX"
+                make -j"$(nproc)"
+                make install
+        fi
+        mkdir -p "$XDG_CONFIG_HOME/tor"
+        cat >"$XDG_CONFIG_HOME/tor/torrc" <<EOF
+DataDirectory=$HOME/.local/share/tor
+ControlPort 9051
+CookieAuthentication 1
+EOF
+        echo "✔ tor installed. Launch with: tor -f $XDG_CONFIG_HOME/tor/torrc"
+        echo
 }
-USER_SHELL=$(detect_shell)
-echo "Detected shell: $USER_SHELL"
-nix develop --command "$USER_SHELL"
-      </pre>
+install_tor_browser() {
+        echo "→ Installing tor-browser (user-local)..."
+        latest=$(curl -s https://www.torproject.org/dist/torbrowser/ | grep -Eo 'href="[0-9]+\.[0-9]+(\.[0-9]+)?/' | sort -V | tail -1 | cut -d'"' -f2 | tr -d '/')
+        [ -z "$latest" ] && latest="$TOR_BROWSER_DEFAULT"
+        TBDIR="$OPT_DIR/tor-browser"
+        mkdir -p "$TBDIR"
+        url="https://www.torproject.org/dist/torbrowser/${latest}/tor-browser-linux64-${latest}_en-US.tar.xz"
+        curl -fsSL "$url" -o "$TBDIR/tor-browser.tar.xz"
+        cd "$TBDIR"
+        tar xf "./tor-browser.tar.xz"
+        ln -sf "$(find "$TBDIR" -type f -name 'start-tor-browser')" "$BIN_DIR/tor-browser"
+        rm -f "./tor-browser.tar.xz"
+        cat >"$HOME/.local/share/applications/tor-browser.desktop" <<EOF
+[Desktop Entry]
+Name=Tor Browser
+Exec=$BIN_DIR/tor-browser
+Icon=$TBDIR/tor-browser_en-US/browser/chrome/icons/default/default128.png
+Type=Application
+Categories=Network;WebBrowser;Privacy;
+EOF
+        echo "✔ tor-browser installed and linked as: tor-browser"
+        echo
+}
+install_nyx() {
+        echo "→ Installing nyx (tor monitor, user-local pip)..."
+        $PY_CMD -m pip install --user nyx
+        mkdir -p "$XDG_CONFIG_HOME/nyx"
+        cat >"$XDG_CONFIG_HOME/nyx/nyxrc" <<EOF
+data_directory = $HOME/.local/share/nyx
+color_override = blue
+EOF
+        echo "✔ nyx installed. Run with: nyx --config $XDG_CONFIG_HOME/nyx/nyxrc"
+        echo
+}
+install_arti() {
+        echo "→ Installing arti (Rust Tor Client)..."
+        if ! command -v cargo >/dev/null; then
+                echo "Rust/cargo not installed. Please install Rust (via https://rustup.rs/)."
+                exit 1
+        fi
+        cargo install --locked --root "$PREFIX" arti
+        mkdir -p "$XDG_CONFIG_HOME/arti"
+        cat >"$XDG_CONFIG_HOME/arti/config.toml" <<EOF
+[storage]
+cache_dir = "$HOME/.cache/arti"
+EOF
+        echo "✔ arti installed. Use via: arti"
+        echo
+}
+install_torsocks() {
+        echo "→ Installing torsocks ($TORSOCKS_VERSION)..."
+        cd "$SRC_DIR"
+        if [ ! -d "torsocks-$TORSOCKS_VERSION" ]; then
+                curl -fsSL "https://github.com/dgoulet/torsocks/releases/download/v$TORSOCKS_VERSION/torsocks-$TORSOCKS_VERSION.tar.gz" | tar xz
+        fi
+        cd "torsocks-$TORSOCKS_VERSION"
+        if [ ! -f "$BIN_DIR/torsocks" ]; then
+                ./configure --prefix="$PREFIX"
+                make -j"$(nproc)"
+                make install
+        fi
+        echo "✔ torsocks installed. Use via: torsocks <command>"
+        echo
+}
+for item in $TO_INSTALL; do
+        case "$item" in
+        tor) install_tor ;;
+        tor-browser) install_tor_browser ;;
+        nyx) install_nyx ;;
+        arti) install_arti ;;
+        torsocks) install_torsocks ;;
+        esac
+done
+case ":$PATH:" in *":$BIN_DIR:"*) ;; *)
+        export PATH="$BIN_DIR:$PATH"
+        echo "→ Added $BIN_DIR to your PATH for this session."
+        ;;
+esac
+echo
+echo "✓ All selected Tor tools are installed user-locally:"
+echo "  Binaries:    $BIN_DIR"
+echo "  Configs:     $XDG_CONFIG_HOME/{tor,nyx,arti}"
+echo "  Browser:     $OPT_DIR/tor-browser"
+echo "  Desktop:     $HOME/.local/share/applications/tor-browser.desktop"
+echo "  To uninstall: rm -rf $PREFIX/{bin,lib,share,opt} $SRC_DIR $HOME/.cache/arti $XDG_CONFIG_HOME/{tor,nyx,arti}"
+echo "─ Ready for Tor Networking! ─"
+exit 0
+</pre>
     </details>
-    <p>Or, <a href="https://github.com/qompassai/dotfiles/blob/main/scripts/quickstart.sh" target="_blank">View the quickstart script</a>.</p>
+    <p>Or, <a href="https://github.com/qompassai/tor/blob/main/scripts/quickstart.sh" target="_blank">View the quickstart script</a>.</p>
   </blockquote>
 </details>
 

@@ -11,29 +11,13 @@
 
 <div>
   <span class="onion-badge">
-    <span class="label">Onion1</span>
     <span class="onion-icon">🧅</span>
     ph43dru5@torbox36ijlcevujx7mjb4oiusvwgvmue7jfn2cvutwa6kl6to3uyqad.onion
   </span>
 </div>
 <div>
-  <span class="onion-badge">
-    <span class="label">Onion2</span>
-    <span class="onion-icon">🧅</span>
-    ph43dru5@torbox3uiot6wchz.onion
-  </span>
-</div>
-<div>
-  <span class="onion-badge">
-    <span class="label">Onion3</span>
-    <span class="onion-icon">🧅</span>
-    ph43dru5@torbox.onion
-  </span>
-</div>
-<div>
   <span class="clearnet-badge">
-    <span class="label">Clearnet</span>
-    <span class="onion-icon">✉️</span>
+    <span class="clearnet-icon">✉️</span>
     ph43dru5@keemail.me
   </span>
 </div>
